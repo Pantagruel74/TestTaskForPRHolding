@@ -32,7 +32,7 @@ class AppleColorVO extends Model
      * Валидация
      */
 
-    public function rules()
+    public function rules():array
     {
         return [
             [static::_rDec, 'required'],
@@ -54,7 +54,7 @@ class AppleColorVO extends Model
      *
      * @return string
      */
-    public function getHex()
+    public function getHex():string
     {
         $rHex = dechex($this->rDec);
         $gHex = dechex($this->gDec);
@@ -74,7 +74,7 @@ class AppleColorVO extends Model
      * @return void
      * @throws \ErrorException
      */
-    public function setHex($hexInput)
+    public function setHex($hexInput):void
     {
         if(strlen($hexInput) != 6) {
             throw new \ErrorException('Шестнадцатеричный цвет должен состоять из 6 символов');
@@ -99,7 +99,7 @@ class AppleColorVO extends Model
      * @return static
      * @throws \ErrorException
      */
-    public static function createByHex($hexColor)
+    public static function createByHex($hexColor):self
     {
         $newOne = new static();
         $newOne->setHex($hexColor);
@@ -113,7 +113,7 @@ class AppleColorVO extends Model
      * @return static
      * @throws \ErrorException
      */
-    public static function createByHexAndValidateStrictly($hexColor)
+    public static function createByHexAndValidateStrictly($hexColor):self
     {
         $newOne = static::createByHex($hexColor);
         $newOne->validateStrictly();

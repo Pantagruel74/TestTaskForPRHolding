@@ -63,7 +63,7 @@ class AppleColorVO extends Model
         if(strlen($hexInput) != 6) {
             throw new \ErrorException('Шестнадцатеричный цвет должен состоять из 6 символов');
         }
-        if(ctype_xdigit($hexInput)) {
+        if(!ctype_xdigit($hexInput)) {
             throw new \ErrorException('Шестнадцатеричный цвет должен состоять только из символов шестнадцатеричных числел');
         }
 
@@ -74,5 +74,19 @@ class AppleColorVO extends Model
         $this->rDec = hexdec($rHex);
         $this->bDec = hexdec($bHex);
         $this->gDec = hexdec($gHex);
+    }
+
+    public static function createByHex($hexColor)
+    {
+        $newOne = new static();
+        $newOne->setHex($hexColor);
+        return $newOne;
+    }
+
+    public static function createByHexAndValidateStrictly($hexColor)
+    {
+        $newOne = static::createByHex($hexColor);
+        $newOne->validateStrictly();
+        return $newOne;
     }
 }

@@ -6,8 +6,12 @@ use backend\source\apples\AppleEn;
 
 class AppleTest extends \Codeception\Test\Unit
 {
-    public function testBase()
+    public function testInitializationAndValidation()
     {
-        $apple = AppleEn::createAndValidateStrictly([]);
+//        $apple = AppleEn::createAndValidateStrictly([]);
+
+//        $goodCreationConfig = [
+//
+//        ];
     }
 }

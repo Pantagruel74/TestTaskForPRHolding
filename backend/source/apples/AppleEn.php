@@ -20,10 +20,24 @@ class AppleEn extends Model
     const _status = 'status';
     const _eatenPercent = 'eatenPercent';
 
+    public $color;
+    public $createdAt;
+    public $fallenAt;
+    public $status;
+    public $eatenPercent;
+
     /**
      * =================================================================================================================
      * Валидация
      */
+
+    public static function ruleForColor($attribute, $object)
+    {
+        return [
+            [$attribute, 'required'],
+            [$attribute, 'string', 'length' => 6],
+        ];
+    }
 
     /**
      * =================================================================================================================

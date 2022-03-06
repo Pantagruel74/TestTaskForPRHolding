@@ -6,6 +6,9 @@ use backend\base\traits\ValidateStrictlyTrait;
 use yii\base\ErrorException;
 use yii\base\Model;
 
+/**
+ * Объект значение цвета яблок
+ */
 class AppleColorVO extends Model
 {
     use ValidateStrictlyTrait;
@@ -15,6 +18,7 @@ class AppleColorVO extends Model
      * Свойства
      */
 
+    //RGB в десятеричной системе
     const _rDec = 'rDec';
     const _bDec = 'bDec';
     const _gDec = 'gDec';
@@ -45,6 +49,11 @@ class AppleColorVO extends Model
      * Логика
      */
 
+    /**
+     * Получить значение в шестнадцатеричной системе
+     *
+     * @return string
+     */
     public function getHex()
     {
         $rHex = dechex($this->rDec);
@@ -58,6 +67,13 @@ class AppleColorVO extends Model
         return $rHex . $gHex . $bHex;
     }
 
+    /**
+     * Установить значение в шестнадцатеричной системе
+     *
+     * @param $hexInput
+     * @return void
+     * @throws \ErrorException
+     */
     public function setHex($hexInput)
     {
         if(strlen($hexInput) != 6) {
@@ -76,6 +92,13 @@ class AppleColorVO extends Model
         $this->gDec = hexdec($gHex);
     }
 
+    /**
+     * Создать объект с помощью значения цвета в шестнадцатеричной системе
+     *
+     * @param $hexColor
+     * @return static
+     * @throws \ErrorException
+     */
     public static function createByHex($hexColor)
     {
         $newOne = new static();
@@ -83,6 +106,13 @@ class AppleColorVO extends Model
         return $newOne;
     }
 
+    /**
+     * Создать объект с помощью значения цвета в шестнадцатеричной системе и строго провалидировать
+     *
+     * @param $hexColor
+     * @return static
+     * @throws \ErrorException
+     */
     public static function createByHexAndValidateStrictly($hexColor)
     {
         $newOne = static::createByHex($hexColor);

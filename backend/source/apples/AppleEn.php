@@ -60,11 +60,13 @@ class AppleEn extends Model
         ];
     }
 
+
+
     public static function ruleForFalledAt($attribute, $object): array
     {
         return [
-            [$attribute, 'required'],
-            [$attribute, 'integer']
+            [$attribute, 'integer'],
+            [$attribute, FalledAtValidator::class, FalledAtValidator::_statusAttributeName => static::_status],
         ];
     }
 
@@ -81,7 +83,8 @@ class AppleEn extends Model
     {
         return [
             [$attribute, 'required'],
-            [$attribute, 'double', 'min' => 0, 'max' => 100]
+            [$attribute, 'double', 'min' => 0, 'max' => 100],
+            [$attribute, EatenPercentValidator::class, EatenPercentValidator::_statusAttributeName => static::_status],
         ];
     }
 

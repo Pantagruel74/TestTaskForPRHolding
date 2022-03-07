@@ -66,7 +66,10 @@ class AppleEn extends Model
     {
         return [
             [$attribute, 'integer'],
-            [$attribute, FalledAtValidator::class, FalledAtValidator::_statusAttributeName => static::_status],
+            [$attribute, FalledAtValidator::class,
+                FalledAtValidator::_statusAttributeName => static::_status,
+                FalledAtValidator::_createdAtAttributeName => static::_createdAt,
+            ],
         ];
     }
 
@@ -110,12 +113,20 @@ class AppleEn extends Model
      * @return void
      * @throws \DomainException
      */
-    public function fall()
+    public function fall($time = null)
     {
+        if(!$time) {
+            $time = time();
+        }
+        if($time < $this->createdAt) {
+            throw new \DomainException('Яблоко не может упасть раньше, чем было создано');
+        }
+        $this->falledAt = $time;
         if($this->getStatusCode() != AppleStatusVO::STATUS_ON_THE_TREE) {
             throw new \DomainException('Яблоко может упасть только если ранее висело на дереве');
         }
         $this->status->statusCode = AppleStatusVO::STATUS_ON_THE_GROUND;
+        $this->validateStrictly();
     }
 
     /**

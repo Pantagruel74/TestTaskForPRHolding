@@ -57,11 +57,14 @@ AppAsset::register($this);
 </header>
 
 <main role="main" class="flex-shrink-0">
-    <div class="container">
+    <div class="container" style="position: relative;">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
+        <div class="alert-space">
+            <div class="container alerts-stack" id="alertsStack">
+            </div>
+        </div>
         <?= $content ?>
     </div>
 </main>
@@ -75,5 +78,12 @@ AppAsset::register($this);
 
 <?php $this->endBody() ?>
 </body>
+<script>
+    <?php
+    foreach(Yii::$app->session->getAllFlashes() as $key => $message) {
+        echo 'createAlert("' . $message . '", "' . $key . '")';
+    }
+    ?>
+</script>
 </html>
 <?php $this->endPage();

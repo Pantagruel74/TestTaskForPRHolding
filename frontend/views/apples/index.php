@@ -9,7 +9,7 @@ use backend\source\apples\AppleStatusVO;
  *
  * @var \yii\data\BaseDataProvider $applesDataProvider
  */
-
+\frontend\assets\AppAsset::register($this);
 $this->title = 'Таблица яблок'
 ?>
 <div>

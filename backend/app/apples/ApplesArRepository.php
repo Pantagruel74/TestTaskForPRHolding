@@ -2,6 +2,7 @@
 
 namespace backend\app\apples;
 
+use backend\base\traits\ValidateStrictlyTrait;
 use backend\infrastructure\db\AppleAr;
 use backend\source\apples\AppleColorVO;
 use backend\source\apples\AppleEn;
@@ -15,6 +16,7 @@ use yii\base\Model;
  */
 class ApplesArRepository extends Model implements ApplesRepositoryInterface
 {
+    use ValidateStrictlyTrait;
 
     /**
      * Получить все сохраненные сущности

@@ -55,6 +55,11 @@ class ApplesController extends Controller
         ];
     }
 
+    /**
+     * Главное представление с таблицей яблок и основным функционалом
+     *
+     * @return string
+     */
     public function actionIndex()
     {
         $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
@@ -67,6 +72,11 @@ class ApplesController extends Controller
         ]);
     }
 
+    /**
+     * Реинициализировать яблоки
+     *
+     * @return void
+     */
     public function actionReinit()
     {
         try {
@@ -80,6 +90,11 @@ class ApplesController extends Controller
         $this->redirect('/apples/index');
     }
 
+    /**
+     * Яблоко с указанным ID упало
+     *
+     * @return void
+     */
     public function actionFall()
     {
         try {
@@ -97,6 +112,11 @@ class ApplesController extends Controller
         $this->redirect('/apples/index');
     }
 
+    /**
+     * Яболко с указанным ID прогнило
+     *
+     * @return void
+     */
     public function actionRot()
     {
         try {

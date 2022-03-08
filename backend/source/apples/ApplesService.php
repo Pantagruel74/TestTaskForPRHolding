@@ -85,11 +85,24 @@ class ApplesService extends Model
         $this->applesRepository->saveMany($apples);
     }
 
+    /**
+     * Удалить все сущности
+     *
+     * @return void
+     */
     public function deleteAll()
     {
         $this->applesRepository->deleteAll();
     }
 
+    /**
+     * Яблоко с указанным ID упало
+     *
+     * @param $id
+     * @return void
+     * @throws \ErrorException
+     * @throws \yii\db\StaleObjectException
+     */
     public function fallOneById($id)
     {
         $appleEn = $this->applesRepository->getOneById($id);
@@ -97,6 +110,14 @@ class ApplesService extends Model
         $this->applesRepository->saveOne($appleEn);
     }
 
+    /**
+     * Яблоко с указанным ID прогнило
+     *
+     * @param $id
+     * @return void
+     * @throws \ErrorException
+     * @throws \yii\db\StaleObjectException
+     */
     public function rotOneById($id)
     {
         $appleEn = $this->applesRepository->getOneById($id);
@@ -104,6 +125,13 @@ class ApplesService extends Model
         $this->applesRepository->saveOne($appleEn);
     }
 
+    /**
+     * Удалить яблоко по ID
+     *
+     * @param $id
+     * @return void
+     * @throws \yii\db\StaleObjectException
+     */
     public function deleteOneById($id)
     {
         $this->applesRepository->deleteOneById($id);

@@ -149,4 +149,20 @@ class ApplesService extends Model
         return $this->applesRepository->getOneById($id);
     }
 
+    /**
+     * откусить яблоко
+     *
+     * @param int $id
+     * @param float $bitPercent
+     * @return void
+     * @throws \ErrorException
+     * @throws \yii\db\StaleObjectException
+     */
+    public function bitOneById(int $id, float $bitPercent)
+    {
+        $appleEn = $this->applesRepository->getOneById($id);
+        $appleEn->bit($bitPercent);
+        $this->applesRepository->saveOne($appleEn);
+    }
+
 }

@@ -144,4 +144,20 @@ class ApplesServiceTest extends \Codeception\Test\Unit
         $this->assertEquals($applesService->getOneById(2), $defaultArrayForTests[2]);
         $this->assertEquals($applesService->getOneById(4), $defaultArrayForTests[4]);
     }
+
+    public function testBitOneById()
+    {
+        $defaultArrayForTests = AppleRepositorySt::defaultArrayForTests();
+        $applesService = ApplesService::createAndValidateStrictly([
+            ApplesService::_unixTime => time(),
+            ApplesService::_applesRepository => new AppleRepositorySt([
+                AppleRepositorySt::_applesArray => $defaultArrayForTests
+            ])
+        ]);
+        $applesService->bitOneById(3, 30);
+        $this->assertEquals($applesService->getOneById(3)->eatenPercent, 30);
+
+        $this->expectException(\DomainException::class);
+        $applesService->bitOneById(1, 30);
+    }
 }

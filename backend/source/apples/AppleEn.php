@@ -216,4 +216,19 @@ class AppleEn extends Model
         return $this->status->statusCode;
     }
 
+    /**
+     * Проверить не пора ли сгнить
+     *
+     * @param $time
+     * @return void
+     */
+    public function checkRotTime($time)
+    {
+        if($this->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND) {
+            if($time - $this->falledAt > 60 * 60 * 5) {
+                $this->rot();
+            }
+        }
+    }
+
 }

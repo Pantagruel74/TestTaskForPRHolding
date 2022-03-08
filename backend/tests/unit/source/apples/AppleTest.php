@@ -386,4 +386,22 @@ class AppleTest extends \Codeception\Test\Unit
         $this->assertEquals($appleThatWillBeEatenFull->eatenPercent, 100);
         $this->assertEquals($appleThatWillBeEatenFull->getStatusCode(), AppleStatusVO::STATUS_TO_DELETE);
     }
+
+    public function testRotTime()
+    {
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 80,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
+        ]);
+        $apple->checkRotTime(time() + 60* 60 * 4);
+        $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_ON_THE_GROUND);
+        $apple->checkRotTime(time() + 60* 60 * 6);
+        $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_ROTTEN);
+    }
 }

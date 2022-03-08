@@ -26,12 +26,14 @@ class AppleEn extends Model
      * Свойства
      */
 
+    const _id = 'id';
     const _color = 'color';
     const _createdAt = 'createdAt';
     const _falledAt = 'falledAt';
     const _status = 'status';
     const _eatenPercent = 'eatenPercent';
 
+    public $id;
     public $color;
     public $createdAt;
     public $falledAt;
@@ -42,6 +44,16 @@ class AppleEn extends Model
      * =================================================================================================================
      * Валидация
      */
+
+    const SCENARIO_CREATE = 'create';
+
+    public function ruleForId($attribute, $object): array
+    {
+        return [
+            [$attribute, 'integer', 'min' => 1],
+            [$attribute, 'required', 'except' => static::SCENARIO_CREATE],
+        ];
+    }
 
     public static function ruleForColor($attribute, $object): array
     {
@@ -59,8 +71,6 @@ class AppleEn extends Model
             [$attribute, 'integer']
         ];
     }
-
-
 
     public static function ruleForFalledAt($attribute, $object): array
     {
@@ -94,6 +104,7 @@ class AppleEn extends Model
     public function rules():array
     {
         return array_merge(
+            static::ruleForId(static::_id, $this),
             static::ruleForColor(static::_color, $this),
             static::ruleForStatus(static::_status, $this),
             static::ruleForCreatedAt(static::_createdAt, $this),

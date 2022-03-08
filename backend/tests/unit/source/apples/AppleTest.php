@@ -18,7 +18,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->assertEquals($appleGoodConfigured->getStatusCode(), AppleStatusVO::STATUS_ON_THE_TREE);
         $this->assertEquals($appleGoodConfigured->falledAt, null);
@@ -26,7 +27,19 @@ class AppleTest extends \Codeception\Test\Unit
         $this->assertEquals($appleGoodConfigured->eatenPercent, 0);
         $this->assertEquals($appleGoodConfigured->color->getHex(), '33f68a');
 
+        $appleGoodConfiguredWithDefaultScenario = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => null,
+            AppleEn::_createdAt => $time,
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
+            ]),
+        ]);
+
         $appleGoodConfigured2 = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
             AppleEn::_falledAt => $time,
             AppleEn::_createdAt => $time,
@@ -38,6 +51,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithoutColor = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => null,
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -49,6 +63,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidColor = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33g68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -60,6 +75,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidFallenAtProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => 'aa',
             AppleEn::_createdAt => $time,
@@ -71,6 +87,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidFallenAtAndStatusPropsCombination = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -82,6 +99,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidCreatedAtProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => null,
@@ -93,6 +111,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidCreatedAtAndFalledAtPropsCombination = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => $time,
             AppleEn::_createdAt => $time + 10,
@@ -104,6 +123,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidCreatedAtProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => 'aa',
@@ -115,6 +135,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidEatenPercentProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -126,6 +147,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidEatenPercentProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -137,6 +159,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidEatenPercentProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -148,6 +171,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidEatenPercentAndStatusPropsCombination = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -159,6 +183,7 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidStatusProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
@@ -170,11 +195,33 @@ class AppleTest extends \Codeception\Test\Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $appleWithInvalidStatusProp = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 1,
             AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
             AppleEn::_falledAt => null,
             AppleEn::_createdAt => $time,
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => 'aa'
+        ]);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $appleWithInvalidId = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => -1,
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
+            AppleEn::_falledAt => null,
+            AppleEn::_createdAt => $time,
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => 'aa'
+        ]);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $appleWithInvalidId = AppleEn::createAndValidateStrictly([
+            AppleEn::_id => 'aa',
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33c68a'),
+            AppleEn::_falledAt => null,
+            AppleEn::_createdAt => $time,
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => 'aa',
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
     }
 
@@ -187,7 +234,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_ON_THE_TREE);
         $apple->fall();
@@ -205,7 +253,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $apple->fall($time + 10);
         $this->assertEquals($apple->falledAt, $time + 10);
@@ -217,7 +266,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->expectException(\DomainException::class);
         $apple->fall($time - 10);
@@ -232,7 +282,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $apple->rot();
         $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_ROTTEN);
@@ -244,7 +295,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->expectException(\DomainException::class);
         $apple->rot();
@@ -256,7 +308,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->expectException(\DomainException::class);
         $apple->rot();
@@ -271,7 +324,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $apple->delete();
         $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_TO_DELETE);
@@ -286,7 +340,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 10,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $apple->bit(23);
         $this->assertEquals($apple->eatenPercent, 33);
@@ -298,7 +353,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 0,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->expectException(\DomainException::class);
         $appleOnTree->bit(23);
@@ -310,7 +366,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 35,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $this->expectException(\DomainException::class);
         $appleRotten->bit(23);
@@ -322,7 +379,8 @@ class AppleTest extends \Codeception\Test\Unit
             AppleEn::_eatenPercent => 80,
             AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
                 AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
-            ])
+            ]),
+            'scenario' => AppleEn::SCENARIO_CREATE,
         ]);
         $appleThatWillBeEatenFull->bit(20);
         $this->assertEquals($appleThatWillBeEatenFull->eatenPercent, 100);

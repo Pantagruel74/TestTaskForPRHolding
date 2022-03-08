@@ -18,6 +18,7 @@ $form = ActiveForm::begin([
         'style' => 'width:400px; height:150px;'
     ]
 ]);
+echo Html::activeHiddenInput($bitForm, BitForm::_id);
 echo $form->field($bitForm, BitForm::_bitPercent)->input('number', [
     'class' => 'form-control'
 ]);

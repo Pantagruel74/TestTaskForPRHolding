@@ -170,6 +170,7 @@ class ApplesController extends Controller
         $appleEn = $applesService->getOneById($id);
 
         $bitForm = BitForm::createByAppleEn($appleEn);
+
         return $this->asJson([
             'html' => $this->renderPartial('_eat-form', [
                 'bitForm' => $bitForm,
@@ -177,8 +178,27 @@ class ApplesController extends Controller
         ]);
     }
 
+    /**
+     * Откусить яблоко
+     *
+     * @return void
+     */
     public function actionBit()
     {
+        try {
+            $bitForm = new BitForm();
+            if (!$bitForm->load(Yii::$app->request->post()) || !$bitForm->validate()) {
+                throw new yii\base\ErrorException('Ошибка: ' . implode(', ', $bitForm->getFirstErrors()));
+            }
 
+            $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+            $applesService->bitOneById($bitForm->id, $bitForm->bitPercent);
+
+            Yii::$app->session->setFlash('success', 'Яблоко укушено');
+        } catch (\Exception $exception) {
+            Yii::$app->session->setFlash('danger', $exception->getMessage());
+        }
+
+        $this->redirect('/apples/index');
     }
 }

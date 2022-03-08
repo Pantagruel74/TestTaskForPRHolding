@@ -192,9 +192,13 @@ class ApplesController extends Controller
             }
 
             $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
-            $applesService->bitOneById($bitForm->id, $bitForm->bitPercent);
+            $appleToDelete = $applesService->bitOneById($bitForm->id, $bitForm->bitPercent);
 
-            Yii::$app->session->setFlash('success', 'Яблоко укушено');
+            if($appleToDelete) {
+                Yii::$app->session->setFlash('warning', 'Яблоко полностью съедено');
+            } else {
+                Yii::$app->session->setFlash('success', 'Яблоко укушено');
+            }
         } catch (\Exception $exception) {
             Yii::$app->session->setFlash('danger', $exception->getMessage());
         }

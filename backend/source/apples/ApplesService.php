@@ -161,16 +161,18 @@ class ApplesService extends Model
      *
      * @param int $id
      * @param float $bitPercent
-     * @return void
+     * @return bool
      * @throws \ErrorException
      * @throws \yii\db\StaleObjectException
      */
-    public function bitOneById(int $id, float $bitPercent)
+    public function bitOneById(int $id, float $bitPercent):bool
     {
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->bit($bitPercent);
+        $appleToDelete = ($appleEn->getStatusCode() == AppleStatusVO::STATUS_TO_DELETE);
         $this->applesRepository->saveOne($appleEn);
         $this->applesRepository->checkAllToRotTime($this->unixTime);
+        return $appleToDelete;
     }
 
 }

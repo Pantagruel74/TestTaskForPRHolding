@@ -44,6 +44,7 @@ class ApplesController extends Controller
                     ],
                     [
                         'actions' => [
+                            'eat-form'
                         ],
                         'allow' => true,
                         'roles' => [
@@ -134,6 +135,11 @@ class ApplesController extends Controller
         $this->redirect('/apples/index');
     }
 
+    /**
+     * Удалить яблоко
+     *
+     * @return void
+     */
     public function actionDelete()
     {
         try {
@@ -149,5 +155,12 @@ class ApplesController extends Controller
         }
 
         $this->redirect('/apples/index');
+    }
+
+    public function actionEatForm()
+    {
+        return $this->asJson([
+            'html' => $this->renderPartial('_eat-form'),
+        ]);
     }
 }

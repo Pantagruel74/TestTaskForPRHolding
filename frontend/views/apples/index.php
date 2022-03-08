@@ -80,7 +80,7 @@ $this->title = 'Таблица яблок'
                     $result .= '<div>' . Html::button('Откусить', [
                         'class' => 'btn btn-info',
                         'style' => 'width: 100%',
-                        'onclick' => "window.location.href = '/apples/bit-from?id=" . $model->id . "'",
+                        'onclick' => "buildOverLayerForm('/apples/eat-form', {id: " . $model->id . "})",
                     ]) . '</div>';
                     $result .= '<div>' . Html::button('Удалить', [
                         'class' => 'btn btn-danger',

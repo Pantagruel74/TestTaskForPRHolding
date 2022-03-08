@@ -100,3 +100,10 @@
 .grid-gap-30 {
     grid-gap: 30px;
 }
+
+.form {
+    background-color: #fff;
+    border-radius: 5px;
+    display: block;
+    padding: 20px;
+}

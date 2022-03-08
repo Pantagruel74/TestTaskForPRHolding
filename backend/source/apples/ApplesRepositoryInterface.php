@@ -54,4 +54,12 @@ interface ApplesRepositoryInterface
      * @throws \yii\db\StaleObjectException
      */
     public function deleteOneById($id);
+
+    /**
+     * Проверить все записи на время загнивания
+     *
+     * @param $time
+     * @return void
+     */
+    public function checkAllToRotTime($time);
 }

@@ -13,7 +13,7 @@ class ApplesServiceConfigurator
     {
         return ApplesService::createAndValidateStrictly([
             ApplesService::_unixTime => time(),
-            ApplesService::_applesRepository => ApplesArRepository::createAndValidateStrictly(),
+            ApplesService::_applesRepository => ApplesArRepository::createAndValidateStrictly([]),
         ]);
     }
 }

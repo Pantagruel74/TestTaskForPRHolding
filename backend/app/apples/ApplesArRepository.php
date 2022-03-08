@@ -106,6 +106,9 @@ class ApplesArRepository extends Model implements ApplesRepositoryInterface
         $appleAr = AppleAr::find()
             ->andWhere([AppleAr::_id => $id])
             ->one();
+        if(!$appleAr) {
+            throw new \InvalidArgumentException('В БД записи яблока с ID=' . $id . ' не существует');
+        }
         return AppleEn::createAndValidateStrictly([
             AppleEn::_id => $appleAr->{AppleAr::_id},
             AppleEn::_createdAt => $appleAr->{AppleAr::_createdAt},

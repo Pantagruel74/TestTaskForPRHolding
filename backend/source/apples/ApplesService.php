@@ -89,4 +89,19 @@ class ApplesService extends Model
     {
         $this->applesRepository->deleteAll();
     }
+
+    public function fallOneById($id)
+    {
+        $appleEn = $this->applesRepository->getOneById($id);
+        $appleEn->fall();
+        $this->applesRepository->saveOne($appleEn);
+    }
+
+    public function rotOneById($id)
+    {
+        $appleEn = $this->applesRepository->getOneById($id);
+        $appleEn->rot();
+        $this->applesRepository->saveOne($appleEn);
+    }
+
 }

@@ -4,6 +4,7 @@ namespace unit\source\apples;
 
 use backend\source\apples\AppleEn;
 use backend\source\apples\ApplesService;
+use backend\source\apples\AppleStatusVO;
 use backend\tests\unit\source\apples\st\AppleRepositorySt;
 
 class ApplesServiceTest extends \Codeception\Test\Unit
@@ -86,5 +87,34 @@ class ApplesServiceTest extends \Codeception\Test\Unit
             /* @var AppleEn $apple */
             $apple->validateStrictly();
         }
+    }
+
+    public function testFallOneById()
+    {
+        $defaultArrayForTests = AppleRepositorySt::defaultArrayForTests();
+        $applesService = ApplesService::createAndValidateStrictly([
+            ApplesService::_unixTime => time(),
+            ApplesService::_applesRepository => new AppleRepositorySt([
+                AppleRepositorySt::_applesArray => AppleRepositorySt::defaultArrayForTests()
+            ])
+        ]);
+        $applesService->fallOneById(1);
+        $this->assertEquals($applesService->getAll()[1]->getStatusCode(), AppleStatusVO::STATUS_ON_THE_GROUND);
+        $this->assertEquals(empty($applesService->getAll()[1]->falledAt), false);
+    }
+
+    public function testRotOneById()
+    {
+        $defaultArrayForTests = AppleRepositorySt::defaultArrayForTests();
+        $applesService = ApplesService::createAndValidateStrictly([
+            ApplesService::_unixTime => time(),
+            ApplesService::_applesRepository => new AppleRepositorySt([
+                AppleRepositorySt::_applesArray => AppleRepositorySt::defaultArrayForTests()
+            ])
+        ]);
+        $applesService->fallOneById(1);
+        $applesService->rotOneById(1);
+        $this->assertEquals($applesService->getAll()[1]->getStatusCode(), AppleStatusVO::STATUS_ROTTEN);
+        $this->assertEquals(empty($applesService->getAll()[1]->falledAt), false);
     }
 }

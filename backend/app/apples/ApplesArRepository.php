@@ -161,8 +161,9 @@ class ApplesArRepository extends Model implements ApplesRepositoryInterface
     {
         $allActiveRecordsToRot = AppleAr::find()
             ->andWhere([AppleAr::_status => AppleStatusVO::STATUS_ON_THE_GROUND])
-            ->andWhere(['<=', AppleAr::_falledAt, $time + (60 * 60 * 5)])
+            ->andWhere(['<=', AppleAr::_falledAt, $time - (60 * 60 * 5)])
             ->all();
+
         foreach ($allActiveRecordsToRot as $ARToRot)
         {
             $ARToRot->{AppleAr::_status} = AppleStatusVO::STATUS_ROTTEN;

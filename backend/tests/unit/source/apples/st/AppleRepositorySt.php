@@ -111,7 +111,7 @@ class AppleRepositorySt extends Model implements ApplesRepositoryInterface
     {
         foreach ($this->applesArray as $appleKey => $appleVal) {
             /* @var AppleEn $appleVal */
-            if(($appleVal->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND) && ($appleVal->falledAt < ($time + (5 * 60 * 60)))) {
+            if(($appleVal->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND) && ($appleVal->falledAt < ($time - (5 * 60 * 60)))) {
                 $this->applesArray[$appleKey]->status = AppleStatusVO::createAndValidateStrictly([
                     AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
                 ]);

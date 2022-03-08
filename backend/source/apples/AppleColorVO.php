@@ -119,4 +119,19 @@ class AppleColorVO extends Model
         $newOne->validateStrictly();
         return $newOne;
     }
+
+    /**
+     * Создать случайный цвет
+     *
+     * @return static
+     * @throws \Exception
+     */
+    public static function createRandomNew(): self
+    {
+        return new static([
+            static::_rDec => random_int(0, 255),
+            static::_gDec => random_int(0, 255),
+            static::_bDec => random_int(0, 255),
+        ]);
+    }
 }

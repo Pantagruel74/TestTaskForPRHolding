@@ -80,4 +80,13 @@ class ColorVOTest extends \Codeception\Test\Unit
         $this->expectException(\ErrorException::class);
         $appleByGoodConfig = AppleColorVO::createByHexAndValidateStrictly('0b9bhf');
     }
+
+    public function testRandomCreation()
+    {
+        for($i = 0; $i < 100; $i++)
+        {
+            $newColor = AppleColorVO::createRandomNew();
+            $newColor->validateStrictly();
+        }
+    }
 }

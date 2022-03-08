@@ -45,4 +45,13 @@ interface ApplesRepositoryInterface
      * @throws \yii\db\StaleObjectException
      */
     public function saveOne($apple);
+
+    /**
+     * Удалить одну сущность по ID
+     *
+     * @param $id
+     * @return void
+     * @throws \yii\db\StaleObjectException
+     */
+    public function deleteOneById($id);
 }

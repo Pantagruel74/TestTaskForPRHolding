@@ -122,6 +122,24 @@ class ApplesArRepository extends Model implements ApplesRepositoryInterface
     }
 
     /**
+     * Удалить одну сущность по ID
+     *
+     * @param $id
+     * @return void
+     * @throws \yii\db\StaleObjectException
+     */
+    public function deleteOneById($id)
+    {
+        $appleAr = AppleAr::find()
+            ->andWhere([AppleAr::_id => $id])
+            ->one();
+        if(!$appleAr) {
+            throw new \InvalidArgumentException('В БД записи яблока с ID=' . $id . ' не существует');
+        }
+        $appleAr->delete();
+    }
+
+    /**
      * Сохранить/обновить одну сущность
      *
      * @param $apple

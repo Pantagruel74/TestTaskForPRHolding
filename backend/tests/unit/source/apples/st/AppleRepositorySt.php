@@ -99,4 +99,12 @@ class AppleRepositorySt extends Model implements ApplesRepositoryInterface
     {
         $this->saveMany([$apple->id => $apple]);
     }
+
+
+    public function deleteOneById($id)
+    {
+        if(isset($this->applesArray[$id]))
+        unset($this->applesArray[$id]);
+    }
+
 }

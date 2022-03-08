@@ -1,6 +1,13 @@
 <?php
 use yii\widgets\ActiveForm;
+use frontend\models\apples\BitForm;
 use yii\helpers\Html;
+
+/**
+ * Форма укуса
+ *
+ * @var BitForm $bitForm
+ */
 
 $form = ActiveForm::begin([
     'id' => 'eatForm',
@@ -11,15 +18,10 @@ $form = ActiveForm::begin([
         'style' => 'width:400px; height:150px;'
     ]
 ]);
-?>
-    <div class="form-group">
-        <label><b>Откусить, %</b></label>
-        <?= Html::input('number', 'eat', '0', [
-            'class' => 'form-control'
-        ]) ?>
-    </div>
-    <?= Html::submitButton('Откусить', [
-        'class' => 'btn btn-info'
-    ]) ?>
-<?php
+echo $form->field($bitForm, BitForm::_bitPercent)->input('number', [
+    'class' => 'form-control'
+]);
+echo Html::submitButton('Откусить', [
+    'class' => 'btn btn-info'
+]);
 ActiveForm::end();

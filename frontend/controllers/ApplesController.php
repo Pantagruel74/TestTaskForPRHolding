@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\app\apples\ApplesServiceConfigurator;
+use frontend\models\apples\BitForm;
 use yii\helpers\Url;
 use yii;
 use yii\filters\AccessControl;
@@ -23,6 +24,7 @@ class ApplesController extends Controller
                             'fall',
                             'rot',
                             'delete',
+                            'bit',
                         ],
                         'allow' => true,
                         'roles' => [
@@ -159,8 +161,24 @@ class ApplesController extends Controller
 
     public function actionEatForm()
     {
+        $id = Yii::$app->request->get('id');
+        if (empty($id)) {
+            throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+        }
+
+        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+        $appleEn = $applesService->getOneById($id);
+
+        $bitForm = BitForm::createByAppleEn($appleEn);
         return $this->asJson([
-            'html' => $this->renderPartial('_eat-form'),
+            'html' => $this->renderPartial('_eat-form', [
+                'bitForm' => $bitForm,
+            ]),
         ]);
+    }
+
+    public function actionBit()
+    {
+
     }
 }

@@ -20,6 +20,9 @@ class ApplesController extends Controller
                         'actions' => [
                             'index',
                             'reinit',
+                            'fall',
+                            'rot',
+                            'delete',
                         ],
                         'allow' => true,
                         'roles' => [
@@ -30,6 +33,9 @@ class ApplesController extends Controller
                         'actions' => [
                             'index',
                             'reinit',
+                            'fall',
+                            'rot',
+                            'delete',
                         ],
                         'allow' => false,
                         'roles' => [
@@ -65,6 +71,30 @@ class ApplesController extends Controller
     {
         $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
         $applesService->resetAppleByRandomNum();
+
+        $this->redirect('/apples/index');
+    }
+
+    public function actionFall()
+    {
+        $id = Yii::$app->request->get('id');
+        if(empty($id)) {
+            throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+        }
+        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+        $applesService->fallOneById($id);
+
+        $this->redirect('/apples/index');
+    }
+
+    public function actionRot()
+    {
+        $id = Yii::$app->request->get('id');
+        if(empty($id)) {
+            throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+        }
+        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+        $applesService->rotOneById($id);
 
         $this->redirect('/apples/index');
     }

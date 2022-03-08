@@ -70,22 +70,26 @@ $this->title = 'Таблица яблок'
                         $result .= '<div>' . Html::button('Упасть', [
                             'class' => 'btn btn-info',
                             'style' => 'width: 100%',
+                            'onclick' => "window.location.href = '/apples/fall?id=" . $model->id . "'",
                         ]) . '</div>';
                     } elseif ($model->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND)
                     {
                         $result .= '<div>' . Html::button('Прогнить', [
                             'class' => 'btn btn-info',
                             'style' => 'width: 100%',
+                                'onclick' => "window.location.href = '/apples/rot?id=" . $model->id . "'",
                         ]) . '</div>';
 
                     }
                     $result .= '<div>' . Html::button('Откусить', [
                         'class' => 'btn btn-info',
                         'style' => 'width: 100%',
+                        'onclick' => "window.location.href = '/apples/bit-from?id=" . $model->id . "'",
                     ]) . '</div>';
                     $result .= '<div>' . Html::button('Удалить', [
                         'class' => 'btn btn-danger',
                         'style' => 'width: 100%',
+                        'onclick' => "window.location.href = '/apples/delete?id=" . $model->id . "'",
                     ]) . '</div>';
                     $result .= '</div>';
                     return $result;

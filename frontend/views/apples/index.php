@@ -65,22 +65,18 @@ $this->title = 'Таблица яблок'
                 {
                     /* @var AppleEn $model */
                     $result = '<div style="display: grid; grid-gap: 5px;">';
-                    if ($model->getStatusCode() == AppleStatusVO::STATUS_ON_THE_TREE)
-                    {
-                        $result .= '<div>' . Html::button('Упасть', [
-                            'class' => 'btn btn-info',
-                            'style' => 'width: 100%',
-                            'onclick' => "window.location.href = '/apples/fall?id=" . $model->id . "'",
-                        ]) . '</div>';
-                    } elseif ($model->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND)
-                    {
-                        $result .= '<div>' . Html::button('Прогнить', [
-                            'class' => 'btn btn-info',
-                            'style' => 'width: 100%',
-                                'onclick' => "window.location.href = '/apples/rot?id=" . $model->id . "'",
-                        ]) . '</div>';
 
-                    }
+                    $result .= '<div>' . Html::button('Упасть', [
+                        'class' => 'btn btn-info',
+                        'style' => 'width: 100%',
+                        'onclick' => "window.location.href = '/apples/fall?id=" . $model->id . "'",
+                    ]) . '</div>';
+                    $result .= '<div>' . Html::button('Прогнить', [
+                        'class' => 'btn btn-info',
+                        'style' => 'width: 100%',
+                            'onclick' => "window.location.href = '/apples/rot?id=" . $model->id . "'",
+                    ]) . '</div>';
+
                     $result .= '<div>' . Html::button('Откусить', [
                         'class' => 'btn btn-info',
                         'style' => 'width: 100%',

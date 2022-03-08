@@ -56,6 +56,7 @@ class ApplesService extends Model
      */
     public function getAll()
     {
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
         return $this->applesRepository->getAll();
     }
 
@@ -83,6 +84,7 @@ class ApplesService extends Model
             ]);
         }
         $this->applesRepository->saveMany($apples);
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
     }
 
     /**
@@ -93,6 +95,7 @@ class ApplesService extends Model
     public function deleteAll()
     {
         $this->applesRepository->deleteAll();
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
     }
 
     /**
@@ -108,6 +111,7 @@ class ApplesService extends Model
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->fall();
         $this->applesRepository->saveOne($appleEn);
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
     }
 
     /**
@@ -123,6 +127,7 @@ class ApplesService extends Model
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->rot();
         $this->applesRepository->saveOne($appleEn);
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
     }
 
     /**
@@ -134,6 +139,7 @@ class ApplesService extends Model
      */
     public function deleteOneById(int $id)
     {
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
         $this->applesRepository->deleteOneById($id);
     }
 
@@ -146,6 +152,7 @@ class ApplesService extends Model
      */
     public function getOneById(int $id):AppleEn
     {
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
         return $this->applesRepository->getOneById($id);
     }
 
@@ -163,6 +170,7 @@ class ApplesService extends Model
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->bit($bitPercent);
         $this->applesRepository->saveOne($appleEn);
+        $this->applesRepository->checkAllToRotTime($this->unixTime);
     }
 
 }

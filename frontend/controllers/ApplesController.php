@@ -133,4 +133,21 @@ class ApplesController extends Controller
 
         $this->redirect('/apples/index');
     }
+
+    public function actionDelete()
+    {
+        try {
+            $id = Yii::$app->request->get('id');
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+            }
+            $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+            $applesService->deleteOneById($id);
+            Yii::$app->session->setFlash('success', 'Яблоко удалено');
+        } catch (\Exception $exception) {
+            Yii::$app->session->setFlash('danger', $exception->getMessage());
+        }
+
+        $this->redirect('/apples/index');
+    }
 }

@@ -131,4 +131,17 @@ class ApplesServiceTest extends \Codeception\Test\Unit
         $applesService->deleteOneById(2);
         $this->assertEquals(isset($applesService->getAll()[2]), false);
     }
+
+    public function testGetOneById()
+    {
+        $defaultArrayForTests = AppleRepositorySt::defaultArrayForTests();
+        $applesService = ApplesService::createAndValidateStrictly([
+            ApplesService::_unixTime => time(),
+            ApplesService::_applesRepository => new AppleRepositorySt([
+                AppleRepositorySt::_applesArray => $defaultArrayForTests
+            ])
+        ]);
+        $this->assertEquals($applesService->getOneById(2), $defaultArrayForTests[2]);
+        $this->assertEquals($applesService->getOneById(4), $defaultArrayForTests[4]);
+    }
 }

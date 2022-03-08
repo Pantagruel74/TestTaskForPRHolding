@@ -103,7 +103,7 @@ class ApplesService extends Model
      * @throws \ErrorException
      * @throws \yii\db\StaleObjectException
      */
-    public function fallOneById($id)
+    public function fallOneById(int $id)
     {
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->fall();
@@ -118,7 +118,7 @@ class ApplesService extends Model
      * @throws \ErrorException
      * @throws \yii\db\StaleObjectException
      */
-    public function rotOneById($id)
+    public function rotOneById(int $id)
     {
         $appleEn = $this->applesRepository->getOneById($id);
         $appleEn->rot();
@@ -132,9 +132,21 @@ class ApplesService extends Model
      * @return void
      * @throws \yii\db\StaleObjectException
      */
-    public function deleteOneById($id)
+    public function deleteOneById(int $id)
     {
         $this->applesRepository->deleteOneById($id);
+    }
+
+    /**
+     * Получить одну запис по ID
+     *
+     * @param int $id
+     * @return AppleEn
+     * @throws \ErrorException
+     */
+    public function getOneById(int $id):AppleEn
+    {
+        return $this->applesRepository->getOneById($id);
     }
 
 }

@@ -154,6 +154,8 @@ class AppleEn extends Model
         $this->eatenPercent += $percent;
         if($this->eatenPercent >= (100 - 0.0001)) {
             $this->delete();
+        } else {
+            $this->validateStrictly();
         }
     }
 
@@ -179,6 +181,7 @@ class AppleEn extends Model
         }
 
         $this->status->statusCode = AppleStatusVO::STATUS_ROTTEN;
+        $this->validateStrictly();
 
     }
 

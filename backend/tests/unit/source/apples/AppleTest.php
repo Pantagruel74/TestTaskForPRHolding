@@ -222,4 +222,110 @@ class AppleTest extends \Codeception\Test\Unit
         $this->expectException(\DomainException::class);
         $apple->fall($time - 10);
     }
+
+    public function testRot()
+    {
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
+            ])
+        ]);
+        $apple->rot();
+        $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_ROTTEN);
+
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => null,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
+            ])
+        ]);
+        $this->expectException(\DomainException::class);
+        $apple->rot();
+
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
+            ])
+        ]);
+        $this->expectException(\DomainException::class);
+        $apple->rot();
+    }
+
+    public function testDelete()
+    {
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
+            ])
+        ]);
+        $apple->delete();
+        $this->assertEquals($apple->getStatusCode(), AppleStatusVO::STATUS_TO_DELETE);
+    }
+
+    public function testBit()
+    {
+        $apple = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 10,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
+            ])
+        ]);
+        $apple->bit(23);
+        $this->assertEquals($apple->eatenPercent, 33);
+
+        $appleOnTree = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => null,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 0,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_TREE,
+            ])
+        ]);
+        $this->expectException(\DomainException::class);
+        $appleOnTree->bit(23);
+
+        $appleRotten = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 35,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ROTTEN,
+            ])
+        ]);
+        $this->expectException(\DomainException::class);
+        $appleRotten->bit(23);
+
+        $appleThatWillBeEatenFull = AppleEn::createAndValidateStrictly([
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly('33f68a'),
+            AppleEn::_falledAt => time() + 10,
+            AppleEn::_createdAt => time(),
+            AppleEn::_eatenPercent => 80,
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => AppleStatusVO::STATUS_ON_THE_GROUND,
+            ])
+        ]);
+        $appleThatWillBeEatenFull->bit(20);
+        $this->assertEquals($appleThatWillBeEatenFull->eatenPercent, 100);
+        $this->assertEquals($appleThatWillBeEatenFull->getStatusCode(), AppleStatusVO::STATUS_TO_DELETE);
+    }
 }

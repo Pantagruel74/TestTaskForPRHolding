@@ -27,4 +27,22 @@ interface ApplesRepositoryInterface
      * @throws \yii\db\StaleObjectException
      */
     public function saveMany($apples);
+
+    /**
+     * Получить сущность по ID
+     *
+     * @param $id
+     * @return AppleEn
+     * @throws \ErrorException
+     */
+    public function getOneById($id);
+
+    /**
+     * Сохранить/обновить одну сущность
+     *
+     * @param $apple
+     * @return void
+     * @throws \yii\db\StaleObjectException
+     */
+    public function saveOne($apple);
 }

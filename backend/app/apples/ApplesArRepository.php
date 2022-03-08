@@ -56,7 +56,7 @@ class ApplesArRepository extends Model implements ApplesRepositoryInterface
     }
 
     /**
-     * Сохранить несколько сущностей
+     * Сохранить/обновить несколько сущностей
      *
      * @param $apples
      * @return void
@@ -92,5 +92,41 @@ class ApplesArRepository extends Model implements ApplesRepositoryInterface
                 $appleAr->save();
             }
         }
+    }
+
+    /**
+     * Получить сущность по ID
+     *
+     * @param $id
+     * @return AppleEn
+     * @throws \ErrorException
+     */
+    public function getOneById($id)
+    {
+        $appleAr = AppleAr::find()
+            ->andWhere([AppleAr::_id => $id])
+            ->one();
+        return AppleEn::createAndValidateStrictly([
+            AppleEn::_id => $appleAr->{AppleAr::_id},
+            AppleEn::_createdAt => $appleAr->{AppleAr::_createdAt},
+            AppleEn::_falledAt => $appleAr->{AppleAr::_falledAt},
+            AppleEn::_eatenPercent => $appleAr->{AppleAr::_eatenPercent},
+            AppleEn::_color => AppleColorVO::createByHexAndValidateStrictly($appleAr->{AppleAr::_color}),
+            AppleEn::_status => AppleStatusVO::createAndValidateStrictly([
+                AppleStatusVO::_statusCode => $appleAr->{AppleAr::_status}
+            ]),
+        ]);
+    }
+
+    /**
+     * Сохранить/обновить одну сущность
+     *
+     * @param $apple
+     * @return void
+     * @throws \yii\db\StaleObjectException
+     */
+    public function saveOne($apple)
+    {
+        $this->saveMany([$apple->id => $apple]);
     }
 }

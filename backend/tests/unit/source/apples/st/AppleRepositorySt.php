@@ -89,4 +89,14 @@ class AppleRepositorySt extends Model implements ApplesRepositoryInterface
             ]),
         ];
     }
+
+    public function getOneById($id)
+    {
+        return $this->applesArray[$id];
+    }
+
+    public function saveOne($apple)
+    {
+        $this->saveMany([$apple->id => $apple]);
+    }
 }

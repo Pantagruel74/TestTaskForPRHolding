@@ -75,7 +75,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect('/site/login');
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        } else {
+            return $this->redirect('/apples/index');
+        }
     }
 
     /**

@@ -28,6 +28,16 @@ class ApplesController extends Controller
                     ],
                     [
                         'actions' => [
+                            'index',
+                            'reinit',
+                        ],
+                        'allow' => false,
+                        'roles' => [
+                            '@', '?',
+                        ],
+                    ],
+                    [
+                        'actions' => [
                         ],
                         'allow' => true,
                         'roles' => [

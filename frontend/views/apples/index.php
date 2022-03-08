@@ -10,9 +10,7 @@ use backend\source\apples\AppleStatusVO;
  * @var \yii\data\BaseDataProvider $applesDataProvider
  */
 
-/**
- * TODO: Добавить кнопки сбороса и управления временем
- */
+$this->title = 'Таблица яблок'
 ?>
 <div>
     <?= Html::button('Реинициализировать случайным кол-вом яблок', [
@@ -66,10 +64,31 @@ use backend\source\apples\AppleStatusVO;
                 'value' => function ($model)
                 {
                     /* @var AppleEn $model */
-                    /**
-                     * TODO: Добавить действия
-                     */
-                    return '';
+                    $result = '<div style="display: grid; grid-gap: 5px;">';
+                    if ($model->getStatusCode() == AppleStatusVO::STATUS_ON_THE_TREE)
+                    {
+                        $result .= '<div>' . Html::button('Упасть', [
+                            'class' => 'btn btn-info',
+                            'style' => 'width: 100%',
+                        ]) . '</div>';
+                    } elseif ($model->getStatusCode() == AppleStatusVO::STATUS_ON_THE_GROUND)
+                    {
+                        $result .= '<div>' . Html::button('Прогнить', [
+                            'class' => 'btn btn-info',
+                            'style' => 'width: 100%',
+                        ]) . '</div>';
+
+                    }
+                    $result .= '<div>' . Html::button('Откусить', [
+                        'class' => 'btn btn-info',
+                        'style' => 'width: 100%',
+                    ]) . '</div>';
+                    $result .= '<div>' . Html::button('Удалить', [
+                        'class' => 'btn btn-danger',
+                        'style' => 'width: 100%',
+                    ]) . '</div>';
+                    $result .= '</div>';
+                    return $result;
                 },
                 'format' => 'raw',
             ],

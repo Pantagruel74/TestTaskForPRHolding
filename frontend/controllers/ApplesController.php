@@ -69,32 +69,47 @@ class ApplesController extends Controller
 
     public function actionReinit()
     {
-        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
-        $applesService->resetAppleByRandomNum();
+        try {
+            $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+            $applesService->resetAppleByRandomNum();
+            Yii::$app->session->setFlash('success', 'Реинициализация прошла успешно!');
+        } catch (\Exception $exception) {
+            Yii::$app->session->setFlash('danger', 'Ошибка при попытке реинициализации');
+        }
 
         $this->redirect('/apples/index');
     }
 
     public function actionFall()
     {
-        $id = Yii::$app->request->get('id');
-        if(empty($id)) {
-            throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+        try {
+            $id = Yii::$app->request->get('id');
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+            }
+            $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+            $applesService->fallOneById($id);
+            Yii::$app->session->setFlash('success', 'Яблоко упало');
+        } catch (\Exception $exception) {
+            Yii::$app->session->setFlash('danger', $exception->getMessage());
         }
-        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
-        $applesService->fallOneById($id);
 
         $this->redirect('/apples/index');
     }
 
     public function actionRot()
     {
-        $id = Yii::$app->request->get('id');
-        if(empty($id)) {
-            throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+        try {
+            $id = Yii::$app->request->get('id');
+            if (empty($id)) {
+                throw new \InvalidArgumentException('Не указан обязательный параметр ID');
+            }
+            $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
+            $applesService->rotOneById($id);
+            Yii::$app->session->setFlash('success', 'Яблоко сгнило');
+        } catch (\Exception $exception) {
+            Yii::$app->session->setFlash('danger', $exception->getMessage());
         }
-        $applesService = ApplesServiceConfigurator::getDefaultInitializedByAr();
-        $applesService->rotOneById($id);
 
         $this->redirect('/apples/index');
     }

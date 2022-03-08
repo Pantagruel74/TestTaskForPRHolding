@@ -104,4 +104,9 @@ class ApplesService extends Model
         $this->applesRepository->saveOne($appleEn);
     }
 
+    public function deleteOneById($id)
+    {
+        $this->applesRepository->deleteOneById($id);
+    }
+
 }

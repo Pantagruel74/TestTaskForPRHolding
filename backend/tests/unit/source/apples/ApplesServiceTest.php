@@ -109,12 +109,26 @@ class ApplesServiceTest extends \Codeception\Test\Unit
         $applesService = ApplesService::createAndValidateStrictly([
             ApplesService::_unixTime => time(),
             ApplesService::_applesRepository => new AppleRepositorySt([
-                AppleRepositorySt::_applesArray => AppleRepositorySt::defaultArrayForTests()
+                AppleRepositorySt::_applesArray => $defaultArrayForTests
             ])
         ]);
         $applesService->fallOneById(1);
         $applesService->rotOneById(1);
         $this->assertEquals($applesService->getAll()[1]->getStatusCode(), AppleStatusVO::STATUS_ROTTEN);
         $this->assertEquals(empty($applesService->getAll()[1]->falledAt), false);
+    }
+
+    public function testDeleteOneById()
+    {
+        $defaultArrayForTests = AppleRepositorySt::defaultArrayForTests();
+        $applesService = ApplesService::createAndValidateStrictly([
+            ApplesService::_unixTime => time(),
+            ApplesService::_applesRepository => new AppleRepositorySt([
+                AppleRepositorySt::_applesArray => $defaultArrayForTests
+            ])
+        ]);
+        $this->assertEquals(isset($applesService->getAll()[2]), true);
+        $applesService->deleteOneById(2);
+        $this->assertEquals(isset($applesService->getAll()[2]), false);
     }
 }

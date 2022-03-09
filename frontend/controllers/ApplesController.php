@@ -38,6 +38,7 @@ class ApplesController extends Controller
                             'fall',
                             'rot',
                             'delete',
+                            'bit',
                         ],
                         'allow' => false,
                         'roles' => [
